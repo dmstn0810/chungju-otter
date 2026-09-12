@@ -58,7 +58,7 @@
       </div>
 
       <!-- Quick Stats KPI -->
-      <div class="hidden lg:flex items-center space-x-2 text-xs">
+      <div class="hidden xl:flex items-center space-x-2 text-xs">
         <div class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
           <span class="text-slate-400">조사 흔적</span>
@@ -71,8 +71,8 @@
         </div>
         <div class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span class="text-slate-400">LHOS 서식지</span>
-          <span class="font-bold text-emerald-300">1,426구간</span>
+          <span class="text-slate-400">서식가능 범위</span>
+          <span class="font-bold text-emerald-300">94.1% (1,185만㎡)</span>
         </div>
         <div class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-amber-400"></span>
@@ -82,19 +82,23 @@
       </div>
 
       <!-- Navigation Tabs -->
-      <nav class="flex items-center space-x-1 sm:space-x-2">
-        <button onclick="switchTab('map')" id="tab-btn-map" class="nav-tab active px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-1.5 hover:bg-slate-800">
+      <nav class="flex items-center space-x-1 sm:space-x-1.5">
+        <button onclick="switchTab('map')" id="tab-btn-map" class="nav-tab active px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-1.5 hover:bg-slate-800">
           <span>🗺️</span> <span>인터랙티브 지도</span>
         </button>
-        <button onclick="switchTab('videos')" id="tab-btn-videos" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 transition-colors flex items-center gap-1.5 hover:bg-slate-800">
+        <button onclick="switchTab('videos')" id="tab-btn-videos" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 transition-colors flex items-center gap-1.5 hover:bg-slate-800">
           <span>🎬</span> <span>영상 갤러리</span>
           <span class="bg-pink-500 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">9</span>
         </button>
-        <button onclick="switchTab('analytics')" id="tab-btn-analytics" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 transition-colors flex items-center gap-1.5 hover:bg-slate-800">
-          <span>📊</span> <span>공간분석 & 통계</span>
+        <button onclick="switchTab('habitat')" id="tab-btn-habitat" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 transition-colors flex items-center gap-1.5 hover:bg-slate-800">
+          <span>🌿</span> <span>서식환경 & LHOS</span>
+          <span class="bg-emerald-500/30 text-emerald-300 text-[10px] px-1.5 py-0.2 rounded-full font-bold">특화</span>
         </button>
-        <button onclick="switchTab('report')" id="tab-btn-report" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 transition-colors flex items-center gap-1.5 hover:bg-slate-800">
-          <span>📑</span> <span>보고서 & 핵심지역</span>
+        <button onclick="switchTab('analytics')" id="tab-btn-analytics" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 transition-colors flex items-center gap-1.5 hover:bg-slate-800">
+          <span>📊</span> <span>공간통계</span>
+        </button>
+        <button onclick="switchTab('report')" id="tab-btn-report" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 transition-colors flex items-center gap-1.5 hover:bg-slate-800">
+          <span>📑</span> <span>보호지역 & 보고서</span>
         </button>
       </nav>
     </div>
@@ -105,7 +109,6 @@
 
     <!-- ==================== TAB 1: INTERACTIVE MAP ==================== -->
     <div id="tab-map" class="w-full h-full relative">
-      <!-- Leaflet Map Div -->
       <div id="map"></div>
 
       <!-- Floating Map Control Panel (Top-Left) -->
@@ -123,7 +126,7 @@
 
         <!-- Basemap Selection -->
         <div class="mt-3">
-          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">기경도 (배경지도)</label>
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">배경지도 (Basemap)</label>
           <div class="grid grid-cols-4 gap-1 text-[11px]">
             <button onclick="setBaseMap('esri')" id="bm-esri" class="p-1.5 border rounded-lg text-center font-medium bg-sky-50 text-sky-700 border-sky-300">위성</button>
             <button onclick="setBaseMap('carto_pos')" id="bm-carto_pos" class="p-1.5 border rounded-lg text-center font-medium bg-white text-slate-700 border-slate-200 hover:bg-slate-50">밝음</button>
@@ -252,7 +255,6 @@
     <!-- ==================== TAB 2: VIDEO GALLERY ==================== -->
     <div id="tab-videos" class="w-full h-full overflow-y-auto p-4 sm:p-6 lg:p-8 hidden bg-slate-100">
       <div class="max-w-7xl mx-auto space-y-6">
-        <!-- Gallery Header -->
         <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-sky-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -270,17 +272,279 @@
           </div>
         </div>
 
-        <!-- Video Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="video-cards-grid">
           <!-- Populated by JavaScript -->
         </div>
       </div>
     </div>
 
-    <!-- ==================== TAB 3: ANALYTICS & CHARTS ==================== -->
+    <!-- ==================== TAB 3: HABITAT ENVIRONMENT (NEW SPECIALIZED TAB) ==================== -->
+    <div id="tab-habitat" class="w-full h-full overflow-y-auto p-4 sm:p-6 lg:p-8 hidden bg-slate-100">
+      <div class="max-w-7xl mx-auto space-y-6">
+        
+        <!-- Header Hero Banner -->
+        <div class="bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl border border-emerald-800/40">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                보고서 2장 & 4장 정밀 데이터 연동
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold mt-2">충주시 수달 서식환경 분석 & LHOS 서식적합도 모델</h2>
+              <p class="text-slate-300 text-sm mt-1 max-w-3xl">
+                충주시의 자연환경 특성(기후, 수리수문, 수질, 먹이자원)과 도심 집중조사지역 12.6㎢(1,426개 구간) 대상 공간적·기능적 서식기반환경 및 LHOS 평가 결과를 체계적으로 제공합니다.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="switchTab('map')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow transition">
+                🗺️ 지도에서 LHOS 폴리곤 보기
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Key Habitat Highlights -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <div class="text-xs font-semibold text-slate-500">수달 서식가능 범위</div>
+            <div class="text-2xl font-extrabold text-emerald-600 mt-1">94.1%</div>
+            <div class="text-xs text-slate-500 mt-1">서식가능(74.4%) + 잠재(19.7%)</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <div class="text-xs font-semibold text-slate-500">바위·암반 풍부도 (10개 이상)</div>
+            <div class="text-2xl font-extrabold text-blue-600 mt-1">79.7%</div>
+            <div class="text-xs text-slate-500 mt-1">전체 1,005만 ㎡에 걸쳐 분포</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <div class="text-xs font-semibold text-slate-500">어류 건강성 양호 (A·B등급)</div>
+            <div class="text-2xl font-extrabold text-purple-600 mt-1">50.0%</div>
+            <div class="text-xs text-slate-500 mt-1">27개 생물측정망 조사 분석</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <div class="text-xs font-semibold text-slate-500">저위 범람원 사질양토 비율</div>
+            <div class="text-2xl font-extrabold text-amber-600 mt-1">79.5%</div>
+            <div class="text-xs text-slate-500 mt-1">모래톱·발자국 흔적 형성 최적</div>
+          </div>
+        </div>
+
+        <!-- SECTION 1: 먹이자원 환경 (어류 및 대형무척추동물) -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+            <div>
+              <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-sky-100 text-sky-800">보고서 라. 먹이자원 분석</span>
+              <h3 class="text-lg font-bold text-slate-900 mt-1">🐟 먹이자원 환경: 충주시 어류 분포 및 건강성 평가</h3>
+            </div>
+            <span class="text-xs text-slate-500">물환경측정망 27개 지점 조사 결과</span>
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            수달의 서식 여부를 결정짓는 가장 핵심적인 인자인 <b>먹이자원(어류 및 저서성 대형무척추동물)</b>은 충주시 27개 생물측정망 지점 분석 결과 건강성 등급이 <b>B등급(35.2%)</b>과 <b>C등급(33.3%)</b>이 주를 이루며, 양호한 생태환경을 유지하고 있습니다. 특히 <b>호암지</b>에서는 주간에 대형 붕어를 사냥하여 섭식하는 모습이 관찰되었으며, <b>요도천 하류</b>와 <b>목계수위표</b> 수계에서는 피라미, 모래무지 등 풍부한 어류가 수달 개체군의 주요 먹이원으로 기능하고 있습니다.
+          </p>
+
+          <!-- Prey Fish Species Cards -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-2">
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1 hover:border-sky-300 transition">
+              <div class="text-2xl">🐠</div>
+              <div class="font-bold text-xs text-slate-900">붕어</div>
+              <div class="text-[10px] text-slate-400 italic">Carassius carassius</div>
+              <span class="inline-block px-2 py-0.5 text-[9px] font-bold bg-pink-100 text-pink-700 rounded-full">호암지 사냥 확인</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1 hover:border-sky-300 transition">
+              <div class="text-2xl">🐟</div>
+              <div class="font-bold text-xs text-slate-900">피라미</div>
+              <div class="text-[10px] text-slate-400 italic">Zacco platypus</div>
+              <span class="inline-block px-2 py-0.5 text-[9px] font-bold bg-sky-100 text-sky-700 rounded-full">하천 전역 최우점</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1 hover:border-sky-300 transition">
+              <div class="text-2xl">🐡</div>
+              <div class="font-bold text-xs text-slate-900">모래무지</div>
+              <div class="text-[10px] text-slate-400 italic">Pseudogobio esocinus</div>
+              <span class="inline-block px-2 py-0.5 text-[9px] font-bold bg-amber-100 text-amber-700 rounded-full">모래·자갈 바닥</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1 hover:border-sky-300 transition">
+              <div class="text-2xl">🦐</div>
+              <div class="font-bold text-xs text-slate-900">밀어</div>
+              <div class="text-[10px] text-slate-400 italic">Rhinogobius brunneus</div>
+              <span class="inline-block px-2 py-0.5 text-[9px] font-bold bg-emerald-100 text-emerald-700 rounded-full">여울 바위 틈새</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1 hover:border-sky-300 transition">
+              <div class="text-2xl">🥢</div>
+              <div class="font-bold text-xs text-slate-900">미꾸리</div>
+              <div class="text-[10px] text-slate-400 italic">M. anguillicaudatus</div>
+              <span class="inline-block px-2 py-0.5 text-[9px] font-bold bg-teal-100 text-teal-700 rounded-full">습지·완류 수역</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1 hover:border-sky-300 transition">
+              <div class="text-2xl">🏞️</div>
+              <div class="font-bold text-xs text-slate-900">버들치</div>
+              <div class="text-[10px] text-slate-400 italic">R. oxycephalus</div>
+              <span class="inline-block px-2 py-0.5 text-[9px] font-bold bg-indigo-100 text-indigo-700 rounded-full">상류 청정 지류</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: 기능적 서식기반환경 6대 핵심 요소 -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-4">
+          <div class="pb-3 border-b border-slate-200">
+            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800">보고서 표 4-13~4-22 분석</span>
+            <h3 class="text-lg font-bold text-slate-900 mt-1">🧱 기능적 서식기반환경 6대 핵심 요소 (도심 집중조사지역 12.6㎢)</h3>
+            <p class="text-xs text-slate-500 mt-0.5">수달의 배설, 은신, 휴식, 이동 행동을 좌우하는 미세 서식환경 인자별 분석 결과</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+            <!-- Factor 1 -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-900 text-sm flex items-center gap-1.5">🪨 1. 바위 및 암반 개수</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700">기여도 최상</span>
+              </div>
+              <p class="text-slate-600">수달은 영역 표시를 위해 수면 위로 돌출된 바위나 암반에 배설합니다. 10개 이상 분포 구간이 <b>79.7%(1,005만 ㎡)</b>로 압도적이며, 바위가 풍부한 구간에서 수달 서식밀도가 3.8배 높게 확인되었습니다.</p>
+              <div class="text-[11px] text-slate-500 font-semibold pt-1 border-t border-slate-200">분포: 10개 이상 79.7% | 없음 14.6% | 1~5개 2.9%</div>
+            </div>
+
+            <!-- Factor 2 -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-900 text-sm flex items-center gap-1.5">🏖️ 2. 토성 (Soil Texture)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700">모래톱 형성</span>
+              </div>
+              <p class="text-slate-600">하천 범람원을 따라 <b>사질양토/사양토가 79.5%</b>로 우세하여, 수달이 물 밖으로 나와 몸을 말리거나 굴착 은신처를 파고 발자국(족적)을 남기기에 매우 유리한 토양 구조입니다.</p>
+              <div class="text-[11px] text-slate-500 font-semibold pt-1 border-t border-slate-200">분포: 사질양토 79.5% | 식토 15.4% | 사토 5.1%</div>
+            </div>
+
+            <!-- Factor 3 -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-900 text-sm flex items-center gap-1.5">🌾 3. 수변 식생 (초본 높이 & 식피율)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700">시각적 차폐</span>
+              </div>
+              <p class="text-slate-600">달뿌리풀, 갈대 등 <b>초본 높이 2m 이상의 고밀도 식생대</b>가 형성된 구간은 주간에 시민의 시선과 접근을 차단하는 훌륭한 자연 차폐막 역할을 하여 수달 은신처의 핵심 기반이 됩니다.</p>
+              <div class="text-[11px] text-slate-500 font-semibold pt-1 border-t border-slate-200">관리방향: 산책로 주변 과도한 하천변 예초 지양</div>
+            </div>
+
+            <!-- Factor 4 -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-900 text-sm flex items-center gap-1.5">🚶 4. 인간간섭도 (Human Disturbance)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700">야간활동 편중</span>
+              </div>
+              <p class="text-slate-600">도심을 지나는 충주천, 교현천 및 호암지 주변은 산책로와 야간 조명, 도로로 인해 간섭도가 높습니다. 이로 인해 수달이 주간 활동을 피하고 <b>심야 시간대(22:00~05:00)</b>에 집중 활동하는 행동 양식을 보입니다.</p>
+              <div class="text-[11px] text-slate-500 font-semibold pt-1 border-t border-slate-200">대책: 수면 직사 야간 조명 차폐 및 비공식 접근로 차단</div>
+            </div>
+
+            <!-- Factor 5 -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-900 text-sm flex items-center gap-1.5">💧 5. 소규모 수공간 (배후습지·보)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-100 text-teal-700">먹이 사냥터</span>
+              </div>
+              <p class="text-slate-600">하천 본류 외에 둠벙, 배후습지, 보(Weir) 배후 수역이 존재하는 구간은 유속이 완만하고 수심이 확보되어 <b>피라미, 붕어 등 어류가 군집</b>하므로 수달의 최우선 사냥 장소로 활용됩니다.</p>
+              <div class="text-[11px] text-slate-500 font-semibold pt-1 border-t border-slate-200">관찰사례: 요도천 영평교 보 배후 수달 3마리 동시 유영</div>
+            </div>
+
+            <!-- Factor 6 -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-900 text-sm flex items-center gap-1.5">🚧 6. 횡단구조물 (보·낙차공·암거)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-700">이동 단절 위험</span>
+              </div>
+              <p class="text-slate-600">높은 보나 복개암거, 급경사 제방은 홍수 시 수달이 수중을 통과하지 못하고 제방이나 도로 상부로 우회하게 만듭니다. 이는 <b>로드킬(Roadkill) 위험</b>을 초래하므로 구조물 개선이 절실합니다.</p>
+              <div class="text-[11px] text-slate-500 font-semibold pt-1 border-t border-slate-200">대책: 건식 이동공간(dry ledge) 및 완경사 디딤돌 설치</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: LHOS 모델 계산 프레임워크 & 서식적합유형 -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
+          <div class="pb-3 border-b border-slate-200">
+            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-purple-100 text-purple-800">보고서 표 4-23 & 표 4-24</span>
+            <h3 class="text-lg font-bold text-slate-900 mt-1">📐 수달 LHOS(Local Habitat Otter Suitability) 모델 계산식 및 적합유형 분류</h3>
+            <p class="text-xs text-slate-500 mt-0.5">수역, 녹지, 산림, 농경지, 시가화 5대 공간별 가중치 평가를 통한 정량적 적합도 산출</p>
+          </div>
+
+          <!-- Formula Card -->
+          <div class="p-5 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 text-white flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+              <div class="text-xs text-sky-400 font-bold uppercase tracking-wider mb-1">LHOS 점수 산출 공식 (Formula)</div>
+              <div class="text-xl sm:text-2xl font-mono font-bold text-emerald-400">
+                S = R × Σ ( A<sub>n</sub> × H<sub>n</sub> )
+              </div>
+              <p class="text-xs text-slate-300 mt-1.5">
+                • <b>S</b>: 최종 LHOS Score (0.5점 ~ 5.0점) | • <b>R</b>: 서식공간 가중치 | • <b>A<sub>n</sub></b>: n순위 서식기회유형 가중치 | • <b>H<sub>n</sub></b>: n순위 서식기회요인 점수
+              </p>
+            </div>
+            <div class="bg-slate-800/80 px-4 py-3 rounded-xl border border-slate-700 text-right">
+              <div class="text-xs text-slate-400">충주시 평가 결과</div>
+              <div class="text-lg font-bold text-white">최저 0.5점 ~ 최고 4.4점</div>
+              <div class="text-xs text-emerald-400 font-semibold">평균 2.8점 (우수 서식 환경)</div>
+            </div>
+          </div>
+
+          <!-- LHOS Classification Table (표 4-24) -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                  <th class="p-3">수달 서식적합유형</th>
+                  <th class="p-3 text-right">면적 (㎡)</th>
+                  <th class="p-3 text-right">비율 (%)</th>
+                  <th class="p-3 text-right">평가 구간 수</th>
+                  <th class="p-3">주요 서식환경 특성 및 관리 방향</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50/80">
+                  <td class="p-3 font-bold text-emerald-700 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded bg-emerald-500"></span> 서식가능유형
+                  </td>
+                  <td class="p-3 text-right font-mono font-bold">9,380,267</td>
+                  <td class="p-3 text-right font-mono font-bold text-emerald-600">74.4%</td>
+                  <td class="p-3 text-right font-mono">171개</td>
+                  <td class="p-3 text-slate-600">바위 10개 이상, 어류 풍부, 수변 2m 내 고밀도 식생 유지 구간 (현재 상태 보전 우선)</td>
+                </tr>
+                <tr class="hover:bg-slate-50/80">
+                  <td class="p-3 font-bold text-lime-700 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded bg-lime-500"></span> 서식잠재유형
+                  </td>
+                  <td class="p-3 text-right font-mono font-bold">2,478,248</td>
+                  <td class="p-3 text-right font-mono font-bold text-lime-600">19.7%</td>
+                  <td class="p-3 text-right font-mono">969개</td>
+                  <td class="p-3 text-slate-600">수질 및 수형 양호하나 부분적 식생 보완 및 구조물 연결성 개선 시 서식 기능 대폭 향상</td>
+                </tr>
+                <tr class="hover:bg-slate-50/80">
+                  <td class="p-3 font-bold text-amber-700 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded bg-amber-500"></span> 서식필요유형
+                  </td>
+                  <td class="p-3 text-right font-mono font-bold">692,644</td>
+                  <td class="p-3 text-right font-mono font-bold text-amber-600">5.5%</td>
+                  <td class="p-3 text-right font-mono">270개</td>
+                  <td class="p-3 text-slate-600">인공 콘크리트 호안, 산책로 간섭 심각 구간 (건식 통로 확보 및 자연형 다층 식생 식재 시급)</td>
+                </tr>
+                <tr class="hover:bg-slate-50/80">
+                  <td class="p-3 font-bold text-red-700 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded bg-red-500"></span> 서식불가유형
+                  </td>
+                  <td class="p-3 text-right font-mono font-bold">55,174</td>
+                  <td class="p-3 text-right font-mono font-bold text-red-600">0.4%</td>
+                  <td class="p-3 text-right font-mono">16개</td>
+                  <td class="p-3 text-slate-600">전면 복개 암거구간 등 물리적 서식 불능 구역 (지하 통과 안전성 점검 대상)</td>
+                </tr>
+                <tr class="bg-slate-50 font-bold border-t-2 border-slate-300">
+                  <td class="p-3">합계 (도심 집중조사구간)</td>
+                  <td class="p-3 text-right font-mono text-slate-900">12,606,333 ㎡</td>
+                  <td class="p-3 text-right font-mono text-slate-900">100.0%</td>
+                  <td class="p-3 text-right font-mono text-slate-900">1,426개</td>
+                  <td class="p-3 text-sky-700 font-semibold">서식가능+잠재 면적 총 94.1% 확보 확인</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: ANALYTICS & CHARTS ==================== -->
     <div id="tab-analytics" class="w-full h-full overflow-y-auto p-4 sm:p-6 lg:p-8 hidden bg-slate-100">
       <div class="max-w-7xl mx-auto space-y-6">
-        <!-- Header -->
         <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800">
             공간통계 및 서식적합도 모델링 분석
@@ -291,7 +555,6 @@
           </p>
         </div>
 
-        <!-- KPI Grid -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
             <div class="text-xs font-semibold text-slate-500">최다 출현 수계</div>
@@ -315,9 +578,7 @@
           </div>
         </div>
 
-        <!-- Charts Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <!-- Chart 1: Watershed Distribution -->
           <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
             <h3 class="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
               <span>🌊 유역권별 수달 흔적 발견 빈도</span>
@@ -329,7 +590,6 @@
             </div>
           </div>
 
-          <!-- Chart 2: Trace Type Ratio -->
           <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
             <h3 class="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
               <span>🐾 흔적 유형별 구성 비율</span>
@@ -341,7 +601,6 @@
             </div>
           </div>
 
-          <!-- Chart 3: LHOS Classes Breakdown -->
           <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
             <h3 class="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
               <span>🌿 LHOS 수달 서식적합유형별 구간 분포</span>
@@ -353,7 +612,6 @@
             </div>
           </div>
 
-          <!-- Chart 4: River Width vs Presence -->
           <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
             <h3 class="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
               <span>📏 하천폭(River Width)에 따른 흔적 빈도</span>
@@ -365,32 +623,12 @@
             </div>
           </div>
         </div>
-
-        <!-- Environmental Factors Correlation Card -->
-        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
-          <h3 class="text-lg font-bold text-slate-900 mb-3">🔬 수달 서식적합도에 미치는 핵심 환경요소 분석</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-            <div class="p-4 rounded-2xl bg-sky-50 border border-sky-100">
-              <div class="font-bold text-sky-900 text-sm mb-1">🪨 바위 및 암반 기질 (최고 기여도)</div>
-              <p class="text-slate-600">수달은 영역 표시를 위해 눈에 띄는 돌출 바위나 평평한 암반에 배설합니다. 바위 개수가 풍부한 구간에서 서식밀도가 3.8배 높게 나타났습니다.</p>
-            </div>
-            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
-              <div class="font-bold text-emerald-900 text-sm mb-1">🌊 수계와의 거리 (수거리 2m 이내)</div>
-              <p class="text-slate-600">조사된 흔적의 86.4%가 수변 2m 이내에 위치하여 하천 수면과 수변식생대 간의 완경사 연속성이 서식에 필수적입니다.</p>
-            </div>
-            <div class="p-4 rounded-2xl bg-amber-50 border border-amber-100">
-              <div class="font-bold text-amber-900 text-sm mb-1">🐟 먹이자원 풍부도 (어류·무척추동물)</div>
-              <p class="text-slate-600">호암지와 요도천 하류 보 배후 수역에서 어류 섭식 및 다개체 동시 활동이 확인되어 풍부한 정수역 먹이 공급원이 핵심 요인입니다.</p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
-    <!-- ==================== TAB 4: REPORT & CONSERVATION ==================== -->
+    <!-- ==================== TAB 5: REPORT & CONSERVATION ==================== -->
     <div id="tab-report" class="w-full h-full overflow-y-auto p-4 sm:p-6 lg:p-8 hidden bg-slate-100">
       <div class="max-w-7xl mx-auto space-y-6">
-        <!-- Overview Card -->
         <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
           <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
@@ -408,14 +646,11 @@
           </div>
         </div>
 
-        <!-- 5 Core Conservation Areas Grid -->
         <div>
           <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
             <span>🛡️</span> <span>충주시 수달 5대 보호·관리 핵심지역 (표 5-1 연동)</span>
           </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="core-areas-grid">
-            <!-- Populated by JavaScript -->
-          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="core-areas-grid"></div>
         </div>
 
         <!-- Report Diagrams Gallery -->
@@ -497,7 +732,6 @@
   <!-- ==================== VIDEO PLAYER MODAL ==================== -->
   <div id="video-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 video-modal-backdrop hidden opacity-0 transition-opacity duration-300">
     <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
-      <!-- Modal Header -->
       <div class="px-6 py-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between text-white flex-none">
         <div class="flex items-center gap-3">
           <span class="w-3 h-3 rounded-full bg-pink-500 animate-ping"></span>
@@ -511,9 +745,7 @@
         </button>
       </div>
 
-      <!-- Modal Body (Video + Playlist + Metadata) -->
       <div class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
-        <!-- Video Container -->
         <div class="video-container relative rounded-2xl bg-black aspect-video max-h-[55vh] flex items-center justify-center">
           <video id="modal-video-player" controls preload="metadata" class="w-full h-full">
             <source id="modal-video-source" src="" type="video/mp4">
@@ -521,12 +753,8 @@
           </video>
         </div>
 
-        <!-- Playlist Tabs (If site has multiple videos) -->
-        <div id="modal-playlist-tabs" class="flex flex-wrap gap-2 pt-1 hidden">
-          <!-- Populated by JS -->
-        </div>
+        <div id="modal-playlist-tabs" class="flex flex-wrap gap-2 pt-1 hidden"></div>
 
-        <!-- Metadata & Ecological Context Card -->
         <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 text-xs text-slate-300 space-y-2">
           <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-700">
             <div class="flex items-center gap-2">

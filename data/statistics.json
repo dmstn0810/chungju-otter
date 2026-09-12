@@ -157,5 +157,129 @@
       "importance": "핵심 관리요소",
       "note": "이동 단절 방지를 위한 생태통로 및 건식 선반(dry ledge) 필요"
     }
-  ]
+  ],
+  "habitat_environment": {
+    "watershed_total_area_sqm": 12606333,
+    "habitat_suitability_breakdown": [
+      {
+        "class": "서식가능유형 (High Suitability)",
+        "area_sqm": 9380267,
+        "ratio": 74.4,
+        "color": "#10B981",
+        "polygon_count": 171,
+        "desc": "충분한 바위(10개 이상), 양호한 수변식생(2m 이상 초본), 풍부한 어류 먹이자원 및 수계 인접성 보유"
+      },
+      {
+        "class": "서식잠재유형 (Moderate Potential)",
+        "area_sqm": 2478248,
+        "ratio": 19.7,
+        "color": "#84CC16",
+        "polygon_count": 969,
+        "desc": "수질 및 하천 선형 양호, 부분적 식생 보완 및 건식 연결성 확보 시 서식 기능이 대폭 증대되는 구간"
+      },
+      {
+        "class": "서식필요유형 (Restoration Needed)",
+        "area_sqm": 692644,
+        "ratio": 5.5,
+        "color": "#F59E0B",
+        "polygon_count": 270,
+        "desc": "인공호안, 도심 산책로 간섭, 구조물에 의한 이동 단절 등으로 서식 환경 복원 및 보완이 시급한 구간"
+      },
+      {
+        "class": "서식불가유형 (Unsuitable)",
+        "area_sqm": 55174,
+        "ratio": 0.4,
+        "color": "#EF4444",
+        "polygon_count": 16,
+        "desc": "전면 복개암거, 극심한 인간간섭 또는 물리적 완전 단절로 인해 직접 서식이 불가능한 구간"
+      }
+    ],
+    "functional_factors": [
+      {
+        "name": "바위 및 암반 개수",
+        "distribution": "10개 이상(79.7%), 없음(14.6%), 1~5개(2.9%), 6~10개(2.8%)",
+        "role": "영역표시(배설) 기질 및 수중 먹이활동 후 휴식·은신 공간 제공",
+        "status": "충주시 하천 전반에 걸쳐 바위 기질이 79.7%로 매우 풍부하게 확보되어 있음"
+      },
+      {
+        "name": "토성 (Soil Texture)",
+        "distribution": "사질양토/사양토(79.5%), 식토(15.4%), 사토(5.1%)",
+        "role": "발자국 흔적 형성, 굴착 은신처 조성 및 수변식생 활착 기반",
+        "status": "저위 범람원 중심의 사질양토가 우세하여 수달의 수변 모래톱 이용에 유리"
+      },
+      {
+        "name": "먹이자원 (어류 건강성)",
+        "distribution": "B등급(35.2%), C등급(33.3%), D등급(16.7%), A등급(14.8%)",
+        "role": "수달의 주 먹이원 (호암지 붕어, 피라미, 모래무지, 밀어, 미꾸리 등)",
+        "status": "생물측정망 27개 지점 분석 결과 양호(A~B등급) 비율이 50%를 차지하며 먹이원 안정적"
+      },
+      {
+        "name": "인간간섭도",
+        "distribution": "도심 산책로, 교량, 자전거도로, 친수공원 인접구간 간섭 집중",
+        "role": "수달의 주간 활동을 제한하고 야간 활동으로 편중시키는 주 요인",
+        "status": "충주천·교현천 및 호암지 주변에서 야간 조명 차폐 및 비공식 수변 접근로 통제 필요"
+      },
+      {
+        "name": "수변 식생 (초본 식피율 & 높이)",
+        "distribution": "2m 이상 고밀도 초본 식생대(달뿌리풀, 갈대 등 발달)",
+        "role": "주간 은신처 제공 및 산책로 시민 시선으로부터의 시각적 차폐",
+        "status": "과도한 예초를 지양하고 자연형 다층 수변식생대 유지 권장"
+      },
+      {
+        "name": "하천 횡단구조물 (보·낙차공)",
+        "distribution": "요도천, 충주천, 교현천 전반에 다수 분포",
+        "role": "갈수기에는 배후 수역 형성으로 먹이자원 풍부, 홍수기에는 이동 단절 유발",
+        "status": "수위 변동 시 도로 우회를 방지하는 건식 선반(dry ledge) 및 완경사 통로 필수"
+      }
+    ],
+    "key_prey_species": [
+      {
+        "name": "붕어",
+        "sci": "Carassius carassius",
+        "role": "호암지 핵심 사냥 어종 (시민제공 영상 관찰)",
+        "tag": "정수역 대형 먹이"
+      },
+      {
+        "name": "피라미",
+        "sci": "Zacco platypus",
+        "role": "충주시 하천 전역 최우점 어종",
+        "tag": "유수역 주 먹이"
+      },
+      {
+        "name": "모래무지",
+        "sci": "Pseudogobio esocinus",
+        "role": "모래·자갈 바닥 서식 저서성 어류",
+        "tag": "하천 바닥 먹이"
+      },
+      {
+        "name": "밀어",
+        "sci": "Rhinogobius brunneus",
+        "role": "여울 바위 틈새 서식 망둑어과 어류",
+        "tag": "여울 먹이"
+      },
+      {
+        "name": "미꾸리",
+        "sci": "Misgurnus anguillicaudatus",
+        "role": "습지 및 완류 수역 영양 공급원",
+        "tag": "습지 먹이"
+      },
+      {
+        "name": "버들치",
+        "sci": "Rhynchocypris oxycephalus",
+        "role": "상류 청정 계곡 및 지류 서식",
+        "tag": "지류 먹이"
+      }
+    ],
+    "lhos_framework": {
+      "formula": "S = R * Σ(An * Hn)",
+      "formula_desc": "S: LHOS 점수 (0.5~5.0), R: 서식공간 가중치, An: n순위 서식기회유형 가중치, Hn: n순위 서식기회요인 점수",
+      "spaces": [
+        "수역 (Waterbody)",
+        "녹지 (Green space)",
+        "산림 (Forest)",
+        "농경지 (Agricultural)",
+        "시가화지역 (Urban)"
+      ]
+    }
+  }
 }

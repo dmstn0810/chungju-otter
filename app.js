@@ -304,13 +304,32 @@ function renderLhosLayer() {
       const tooltipContent = `
         <div class="text-xs">
           <div class="font-bold mb-0.5" style="color: ${color}">${p.lhos_class}</div>
-          <div><b>LHOS 적합도 점수:</b> ${p.lhos} / 5.0</div>
+          <div><b>LHOS 적합도:</b> ${p.lhos} / 5.0</div>
           <div><b>비오톱/현존식생:</b> ${p.biotope || '-'} (${p.veg || '-'})</div>
           <div><b>면적:</b> ${p.area ? p.area.toLocaleString() + ' ㎡' : '-'}</div>
         </div>
       `;
 
+      const popupHtml = `
+        <div class="w-64 p-3 text-xs bg-slate-900 text-white rounded-xl">
+          <div class="flex items-center justify-between pb-1.5 border-b border-slate-700">
+            <span class="font-bold text-xs" style="color: ${color}">${p.lhos_class}</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-emerald-400">LHOS ${p.lhos}점</span>
+          </div>
+          <div class="mt-2 space-y-1 text-[11px] text-slate-300">
+            <div><b class="text-slate-400">구간 면적:</b> ${p.area ? p.area.toLocaleString() + ' ㎡' : '-'}</div>
+            <div><b class="text-slate-400">비오톱 코드:</b> ${p.biotope || '-'}</div>
+            <div><b class="text-slate-400">현존 식생:</b> ${p.veg || '-'}</div>
+            <div><b class="text-slate-400">하천 지형:</b> ${p.landform || '-'}</div>
+          </div>
+          <button onclick="switchTab('habitat')" class="w-full mt-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-[10px] font-bold transition">
+            🌿 서식환경 및 LHOS 모델 상세 보기 →
+          </button>
+        </div>
+      `;
+
       layer.bindTooltip(tooltipContent, { sticky: true, className: 'glass-panel p-2 text-xs rounded-xl shadow-md' });
+      layer.bindPopup(popupHtml);
 
       layer.on({
         mouseover: (e) => {
@@ -741,7 +760,7 @@ function initCharts() {
 // ==================== 9. TAB SWITCHING ====================
 function switchTab(tabId) {
   // Hide all tabs
-  ['map', 'videos', 'analytics', 'report'].forEach(t => {
+  ['map', 'videos', 'habitat', 'analytics', 'report'].forEach(t => {
     const tabEl = document.getElementById(`tab-${t}`);
     const btnEl = document.getElementById(`tab-btn-${t}`);
     if (tabEl) tabEl.classList.add('hidden');
