@@ -1,0 +1,161 @@
+{
+  "total_traces_db": 2280,
+  "total_traces_report": 2402,
+  "camera_sites_count": 8,
+  "video_count": 9,
+  "watershed_breakdown": [
+    {
+      "name": "목계수위표",
+      "count": 650,
+      "ratio": 27.1,
+      "color": "#3B82F6"
+    },
+    {
+      "name": "운계천합류전",
+      "count": 436,
+      "ratio": 18.2,
+      "color": "#10B981"
+    },
+    {
+      "name": "요도천",
+      "count": 409,
+      "ratio": 17.0,
+      "color": "#F59E0B"
+    },
+    {
+      "name": "달천하류",
+      "count": 313,
+      "ratio": 13.0,
+      "color": "#8B5CF6"
+    },
+    {
+      "name": "석문동천",
+      "count": 176,
+      "ratio": 7.3,
+      "color": "#EC4899"
+    },
+    {
+      "name": "석문동천합류전",
+      "count": 115,
+      "ratio": 4.8,
+      "color": "#6366F1"
+    },
+    {
+      "name": "섬강합류전",
+      "count": 105,
+      "ratio": 4.4,
+      "color": "#14B8A6"
+    },
+    {
+      "name": "충주조정지댐",
+      "count": 77,
+      "ratio": 3.2,
+      "color": "#06B6D4"
+    },
+    {
+      "name": "충주댐",
+      "count": 67,
+      "ratio": 2.8,
+      "color": "#84CC16"
+    },
+    {
+      "name": "충주댐하류",
+      "count": 54,
+      "ratio": 2.2,
+      "color": "#64748B"
+    }
+  ],
+  "trace_type_breakdown": [
+    {
+      "type": "배설물 (Spraint)",
+      "count": 2190,
+      "ratio": 96.1,
+      "color": "#3B82F6",
+      "badge": "bg-blue-100 text-blue-800"
+    },
+    {
+      "type": "발자국 (Footprint)",
+      "count": 81,
+      "ratio": 3.5,
+      "color": "#F59E0B",
+      "badge": "bg-amber-100 text-amber-800"
+    },
+    {
+      "type": "목견 / 영상 (Sighting)",
+      "count": 6,
+      "ratio": 0.3,
+      "color": "#10B981",
+      "badge": "bg-emerald-100 text-emerald-800"
+    },
+    {
+      "type": "섭식흔적 (Feeding)",
+      "count": 1,
+      "ratio": 0.05,
+      "color": "#EC4899",
+      "badge": "bg-pink-100 text-pink-800"
+    },
+    {
+      "type": "기타흔적 (Other)",
+      "count": 2,
+      "ratio": 0.05,
+      "color": "#6B7280",
+      "badge": "bg-gray-100 text-gray-800"
+    }
+  ],
+  "lhos_summary": {
+    "score_range": "0.5 ~ 4.5점 (평균 2.8점)",
+    "classes": [
+      {
+        "name": "서식가능유형 (High Suitability)",
+        "color": "#10B981",
+        "polygon_count": 171,
+        "desc": "바위 은신처, 양호한 수변식생, 풍부한 먹이자원 및 낮은 인간간섭 보유 구간"
+      },
+      {
+        "name": "서식잠재유형 (Moderate Potential)",
+        "color": "#84CC16",
+        "polygon_count": 969,
+        "desc": "수질 및 하천선형 양호, 부분적 식생 또는 연결성 개선 시 서식 기능 증대 구간"
+      },
+      {
+        "name": "서식필요유형 (Restoration Needed)",
+        "color": "#F59E0B",
+        "polygon_count": 270,
+        "desc": "인공호안, 산책로 간섭, 건식 이동공간 부족 등으로 서식 환경 복원 및 보완 필요 구간"
+      },
+      {
+        "name": "서식불가유형 (Unsuitable)",
+        "color": "#EF4444",
+        "polygon_count": 16,
+        "desc": "전면 복개, 극심한 인간간섭 또는 단절로 인해 직접 서식이 어려운 구간"
+      }
+    ]
+  },
+  "environmental_factors": [
+    {
+      "factor": "바위 및 암반 개수",
+      "importance": "매우 높음",
+      "note": "배설 및 은신·휴식 공간의 핵심 기질"
+    },
+    {
+      "factor": "수계와의 거리 (수거리)",
+      "importance": "매우 높음",
+      "note": "흔적의 85% 이상이 수변 2m 이내 집중"
+    },
+    {
+      "factor": "먹이자원 풍부도",
+      "importance": "높음",
+      "note": "어류 및 대형무척추동물 건강성 지수와 밀접한 양의 상관관계"
+    },
+    {
+      "factor": "인간간섭도",
+      "importance": "높음",
+      "note": "간섭도가 높을수록 야간 활동 의존도 급증"
+    },
+    {
+      "factor": "하천 횡단구조물 (보·낙차공)",
+      "importance": "핵심 관리요소",
+      "note": "이동 단절 방지를 위한 생태통로 및 건식 선반(dry ledge) 필요"
+    }
+  ]
+}

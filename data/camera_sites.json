@@ -1,0 +1,232 @@
+[
+  {
+    "id": "cam_yeongpyeong",
+    "name": "요도천 영평교",
+    "location": "충청북도 충주시 대소원면 영평리 (영평교)",
+    "watershed": "요도천",
+    "lat": 36.9782,
+    "lon": 127.8185,
+    "type": "무인센서카메라 (적외선)",
+    "installed_date": "2026년 상반기",
+    "sign_count_nearby": 409,
+    "description": "요도천 하류 영평교 인근 보 및 바위 지대. 야간 센서카메라에 수달 성체 3개체가 동시에 출현하여 보 배후 수역에서 활발히 이동하는 장면이 확인된 핵심 지점입니다.",
+    "ecology_note": "하천 폭 25~30m 내외로 풍부한 자갈·모래톱 및 보 배후수역이 형성되어 먹이자원(어류 등)이 풍부하며 수달의 지속적 이용이 관찰됨.",
+    "has_video": true,
+    "videos": [
+      {
+        "id": "v1",
+        "title": "요도천 영평교 야간 수달 활동 (2편)",
+        "filename": "1. 요도천_영평교2.MP4",
+        "url": "/videos/yeongpyeong_1.mp4",
+        "duration": "야간 적외선",
+        "description": "영평교 교각 및 수변 바위 지대에서 야간에 출현한 수달의 활발한 탐색 및 이동 영상",
+        "otter_count": "1~2개체",
+        "behavior": "수변 탐색, 수중 잠수 및 바위 은신처 이동"
+      },
+      {
+        "id": "v2",
+        "title": "요도천 영평교 수달 다개체 동시 출현 (3편)",
+        "filename": "2. 요도천_영평교3.MP4",
+        "url": "/videos/yeongpyeong_2.mp4",
+        "duration": "야간 적외선",
+        "description": "보 배후 수역에서 수달 3개체가 동시에 이동 및 수영하는 모습이 포착된 결정적 증거 영상",
+        "otter_count": "3개체 동시 출현",
+        "behavior": "무리 이동, 상호작용 및 수중 유영"
+      }
+    ]
+  },
+  {
+    "id": "cam_hacheong",
+    "name": "목계수위표 하청교",
+    "location": "충청북도 충주시 소태면 하청리 (하청교)",
+    "watershed": "목계수위표",
+    "lat": 37.1065,
+    "lon": 127.851,
+    "type": "무인센서카메라 (적외선)",
+    "installed_date": "2026년 상반기",
+    "sign_count_nearby": 650,
+    "description": "목계수위표 유역권 하청교 하부 암반 지대. 충주시 전체 흔적의 27.1%(650개소)가 집중된 수계로 교각 아래 암반 은신처를 이용하는 수달이 반복적으로 포착되었습니다.",
+    "ecology_note": "소태천과 남한강 본류가 만나는 지점으로 수환경이 우수하고 인간 간섭도가 낮아 수달의 장기 모니터링 고정 거점으로 적합한 지역.",
+    "has_video": true,
+    "videos": [
+      {
+        "id": "v3",
+        "title": "목계수위표 하청교 야간 이동 (1편)",
+        "filename": "5. 목계수위표_하청교_소태면.MP4",
+        "url": "/videos/hacheong_1.mp4",
+        "duration": "야간 적외선",
+        "description": "교각 하부 자갈·암반 구간을 가로질러 수면으로 입수하는 수달의 야간 생태 영상",
+        "otter_count": "1개체",
+        "behavior": "암반 은신처 탐색 및 입수 이동"
+      },
+      {
+        "id": "v4",
+        "title": "목계수위표 하청교 수변 모니터링 (2편)",
+        "filename": "3. 목계수위표_하청교_소태면2.MP4",
+        "url": "/videos/hacheong_2.mp4",
+        "duration": "야간 적외선",
+        "description": "하청교 수변 수생태계에서 주변 경계 및 먹이 탐색 활동을 벌이는 수달 포착 영상",
+        "otter_count": "1개체",
+        "behavior": "수변 경계 및 먹이 탐색"
+      }
+    ]
+  },
+  {
+    "id": "cam_nongang",
+    "name": "목계수위표 엄정면 논강리",
+    "location": "충청북도 충주시 엄정면 논강리 (영덕천/원곡천 합류부)",
+    "watershed": "목계수위표",
+    "lat": 37.1008,
+    "lon": 127.9152,
+    "type": "무인센서카메라 (적외선)",
+    "installed_date": "2026년 상반기",
+    "sign_count_nearby": 650,
+    "description": "원곡천 및 영덕천이 남한강 본류로 유입되는 자연형 하천 합류부. 바위 도약 및 야간 이동 행동이 포착되었습니다.",
+    "ecology_note": "넓은 자갈밭과 자연 식생대가 잘 보존되어 있어 남한강 수계 수달의 핵심 이동 통로 및 서식 기반으로 기능함.",
+    "has_video": true,
+    "videos": [
+      {
+        "id": "v5",
+        "title": "목계수위표 엄정면 논강리 수달 활동",
+        "filename": "4. 목계수위표_엄정면_논강리.MP4",
+        "url": "/videos/nongang_1.mp4",
+        "duration": "야간 적외선",
+        "description": "합류부 수변 바위 사이를 신속하게 도약하여 수중으로 이동하는 야간 생태 영상",
+        "otter_count": "1개체",
+        "behavior": "바위 도약, 입수 및 잠수 활동"
+      }
+    ]
+  },
+  {
+    "id": "cam_hoamji",
+    "name": "달천하류 호암지",
+    "location": "충청북도 충주시 호암동 (호암저수지)",
+    "watershed": "달천하류",
+    "lat": 36.9535,
+    "lon": 127.9405,
+    "type": "무인센서카메라 & 시민제공 모니터링",
+    "installed_date": "2026년 상반기",
+    "sign_count_nearby": 313,
+    "description": "충주시 도심 속 대표 호소 생태계인 호암지. 야간 무인센서카메라 촬영뿐만 아니라 주간에 대형 붕어를 사냥하여 섭식하는 수달의 모습이 시민에 의해 연속 관찰된 핵심 서식지입니다.",
+    "ecology_note": "보호관리 핵심지역 1순위. 풍부한 어류 자원이 확보되어 있으나 도심 산책로 등 시민 이용 압력이 높아 인간-수달 공존 가이드라인이 가장 필요한 지역.",
+    "has_video": true,
+    "videos": [
+      {
+        "id": "v6",
+        "title": "달천하류 호암지 무인센서카메라 야간 촬영",
+        "filename": "7. 달천하류_호암지.MP4",
+        "url": "/videos/hoamji_night.mp4",
+        "duration": "야간 적외선",
+        "description": "호암지 수문 및 수변 구조물 인근에서 야간에 활동하는 수달 무인카메라 포착 영상",
+        "otter_count": "1개체",
+        "behavior": "수문 주변 수중 이동 및 먹이활동"
+      },
+      {
+        "id": "v7",
+        "title": "호암지 수달 붕어 섭식 먹이활동 (시민제공 1)",
+        "filename": "6-1. 달천하류_호암지_시민제공.mp4",
+        "url": "/videos/hoamji_citizen_1.mp4",
+        "duration": "주간 고화질",
+        "description": "호암지 수면 위에서 포획한 대형 붕어를 물고 나와 섭식하는 주간 생태 관찰 영상",
+        "otter_count": "1개체",
+        "behavior": "대형 어류(붕어) 섭식, 수면 유영"
+      },
+      {
+        "id": "v8",
+        "title": "호암지 수달 수면 유영 및 잠수 (시민제공 2)",
+        "filename": "6-2. 달천하류_호암지_시민제공2.mp4",
+        "url": "/videos/hoamji_citizen_2.mp4",
+        "duration": "주간 고화질",
+        "description": "호암지 연안을 따라 자유롭게 유영하며 잠수하는 수달의 건강한 활동 모습",
+        "otter_count": "1개체",
+        "behavior": "연안 유영, 잠수 및 호흡"
+      }
+    ]
+  },
+  {
+    "id": "cam_dalcheon",
+    "name": "달천하류 달천 본류",
+    "location": "충청북도 충주시 단월동/유주막 인근 (달천)",
+    "watershed": "달천하류",
+    "lat": 36.945,
+    "lon": 127.904,
+    "type": "현장 조사원 목견 촬영",
+    "installed_date": "2026년 상반기",
+    "sign_count_nearby": 313,
+    "description": "달천 본류 상수원보호구역 연계 구간. 맑은 수질과 바위·여울이 형성되어 수달이 주간에 활발하게 수영하며 먹이를 탐색하는 모습이 직접 목견 및 촬영되었습니다.",
+    "ecology_note": "상수원보호구역 및 수주팔봉과 연계되는 생태축으로 하천 내 바위와 고밀도 초본식생이 발달한 보전 우선형 핵심서식지.",
+    "has_video": true,
+    "videos": [
+      {
+        "id": "v9",
+        "title": "달천 본류 주간 수영 및 먹이 탐색 (목견 영상)",
+        "filename": "8. 달천하류_달천_이윤정.mp4",
+        "url": "/videos/dalcheon_sighting.mp4",
+        "duration": "주간 실사",
+        "description": "맑은 달천 여울을 가로지르며 활기차게 수영하는 수달의 현장 목견 촬영 영상",
+        "otter_count": "1개체",
+        "behavior": "여울 수영, 먹이 탐색, 잠수"
+      }
+    ]
+  },
+  {
+    "id": "cam_daebong",
+    "name": "충주천·교현천 합수부 대봉교",
+    "location": "충청북도 충주시 성내충인동/봉방동 (대봉교)",
+    "watershed": "달천하류",
+    "lat": 36.9748,
+    "lon": 127.9282,
+    "type": "무인센서카메라 고정 모니터링 거점",
+    "installed_date": "2026년 상반기",
+    "sign_count_nearby": 313,
+    "description": "충주천과 교현천이 만나는 도심 하천 합류부. 도심 내 인간 간섭도가 높음에도 불구하고 수달의 이동 및 흔적이 반복 확인되어 은신공간 보완이 필요한 핵심지역입니다.",
+    "ecology_note": "보호관리 핵심지역 2순위. 하천 제방 및 수변 초창 유지가 필요하며 산책로 조명 차폐 및 비공식 접근로 통제가 요구됨.",
+    "has_video": false,
+    "videos": []
+  },
+  {
+    "id": "cam_daejeji",
+    "name": "도심 대제지",
+    "location": "충청북도 충주시 칠금동 (대제지)",
+    "watershed": "달천하류",
+    "lat": 36.9805,
+    "lon": 127.913,
+    "type": "무인센서카메라 고정 모니터링 거점",
+    "installed_date": "2026년 상반기",
+    "sign_count_nearby": 313,
+    "description": "호암저수지와 함께 도심 내 호소-소하천 연계 서식지로 기능하는 대제지 저수지. 과거 낚시터 등으로 이용되었으나 수달 서식환경 개선이 추진 중입니다.",
+    "ecology_note": "보호관리 핵심지역 1순위 연계. 소하천과의 연결부에 생태통로 확보 및 제방 완경사화가 필요한 구간.",
+    "has_video": false,
+    "videos": []
+  },
+  {
+    "id": "cam_chilgeum",
+    "name": "칠금교 (탄금대 인근)",
+    "location": "충청북도 충주시 칠금동 (칠금교)",
+    "watershed": "달천하류",
+    "lat": 36.986,
+    "lon": 127.899,
+    "type": "무인센서카메라 고정 모니터링 거점",
+    "installed_date": "2026년 상반기",
+    "sign_count_nearby": 313,
+    "description": "남한강 본류와 달천이 합류하는 탄금대 인근 칠금교. 수달의 광역 이동 통로이자 하천횡단구조물 통과 여부 검증 모니터링 지점입니다.",
+    "ecology_note": "교량 하부 수위 상승 시 건식 이동공간(dry ledge) 확보 및 연속성 유지가 중요한 지점.",
+    "has_video": false,
+    "videos": []
+  },
+  {
+    "id": "cam_yangchon",
+    "name": "금가면 양촌리",
+    "location": "충청북도 충주시 금가면 양촌리",
+    "watershed": "목계수위표",
+    "lat": 37.058,
+    "lon": 127.916,
+    "type": "무인센서카메라 고정 모니터링 거점",
+    "installed_date": "2026년 상반기",
+    "sign_count_nearby": 650,
+    "description": "충주조정지댐 하류와 목계수위표 유역을 연결하는 주요 수변 구간.",
+    "ecology_note": "수달의 남북 간 광역 이동축에 위치한 모니터링 거점.",
+    "has_video": false,
+    "videos": []
+  }
+]

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>충주시 멸종위기종 수달 서식현황 및 서식적합도(LHOS) 모니터링 시스템</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col h-screen overflow-hidden">
+
+  <!-- TOP HEADER -->
+  <header class="bg-slate-900 text-white shadow-lg z-30 flex-none border-b border-slate-800">
+    <div class="px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      <!-- Logo & Title -->
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-emerald-400 flex items-center justify-center text-2xl shadow-md">
+          🦦
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
+              충주시 멸종위기종 수달<span class="text-xs text-sky-400 font-normal hidden sm:inline">(Lutra lutra)</span> 공간분포 & 서식적합도(LHOS) 시스템
+            </h1>
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              최종 연구보고서 연동
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 hidden md:block">
+            Chungju Eurasian Otter Habitat Suitability & Sensor-Camera Monitoring Platform
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Stats KPI -->
+      <div class="hidden lg:flex items-center space-x-2 text-xs">
+        <div class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+          <span class="text-slate-400">조사 흔적</span>
+          <span class="font-bold text-sky-300">2,280건</span>
+        </div>
+        <div class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
+          <span class="text-slate-400">무인카메라 영상</span>
+          <span class="font-bold text-pink-400">9편 탑재</span>
+        </div>
+        <div class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span class="text-slate-400">LHOS 서식지</span>
+          <span class="font-bold text-emerald-300">1,426구간</span>
+        </div>
+        <div class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span class="text-slate-400">핵심 보호구역</span>
+          <span class="font-bold text-amber-300">5개소</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex items-center space-x-1 sm:space-x-2">
+        <button onclick="switchTab('map')" id="tab-btn-map" class="nav-tab active px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-1.5 hover:bg-slate-800">
+          <span>🗺️</span> <span>인터랙티브 지도</span>
+        </button>
+        <button onclick="switchTab('videos')" id="tab-btn-videos" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 transition-colors flex items-center gap-1.5 hover:bg-slate-800">
+          <span>🎬</span> <span>영상 갤러리</span>
+          <span class="bg-pink-500 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">9</span>
+        </button>
+        <button onclick="switchTab('analytics')" id="tab-btn-analytics" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 transition-colors flex items-center gap-1.5 hover:bg-slate-800">
+          <span>📊</span> <span>공간분석 & 통계</span>
+        </button>
+        <button onclick="switchTab('report')" id="tab-btn-report" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 transition-colors flex items-center gap-1.5 hover:bg-slate-800">
+          <span>📑</span> <span>보고서 & 핵심지역</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-1 relative overflow-hidden">
+
+    <!-- ==================== TAB 1: INTERACTIVE MAP ==================== -->
+    <div id="tab-map" class="w-full h-full relative">
+      <!-- Leaflet Map Div -->
+      <div id="map"></div>
+
+      <!-- Floating Map Control Panel (Top-Left) -->
+      <div class="absolute top-4 left-4 z-20 w-80 max-w-[calc(100vw-2rem)] glass-panel rounded-2xl shadow-2xl p-4 border border-slate-200/80 transition-all max-h-[85vh] overflow-y-auto">
+        <!-- Panel Header -->
+        <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🎛️</span>
+            <h2 class="font-bold text-sm text-slate-900">지도 레이어 & 필터</h2>
+          </div>
+          <button onclick="resetMapView()" title="충주시 전역으로 지도 초기화" class="text-xs px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-md font-medium transition">
+            전체 보기
+          </button>
+        </div>
+
+        <!-- Basemap Selection -->
+        <div class="mt-3">
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">기경도 (배경지도)</label>
+          <div class="grid grid-cols-4 gap-1 text-[11px]">
+            <button onclick="setBaseMap('esri')" id="bm-esri" class="p-1.5 border rounded-lg text-center font-medium bg-sky-50 text-sky-700 border-sky-300">위성</button>
+            <button onclick="setBaseMap('carto_pos')" id="bm-carto_pos" class="p-1.5 border rounded-lg text-center font-medium bg-white text-slate-700 border-slate-200 hover:bg-slate-50">밝음</button>
+            <button onclick="setBaseMap('carto_dark')" id="bm-carto_dark" class="p-1.5 border rounded-lg text-center font-medium bg-white text-slate-700 border-slate-200 hover:bg-slate-50">다크</button>
+            <button onclick="setBaseMap('osm')" id="bm-osm" class="p-1.5 border rounded-lg text-center font-medium bg-white text-slate-700 border-slate-200 hover:bg-slate-50">일반</button>
+          </div>
+        </div>
+
+        <!-- Layer Toggles -->
+        <div class="mt-4 pt-3 border-t border-slate-200 space-y-2.5">
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">표시 레이어</label>
+          
+          <!-- Camera Layer Toggle -->
+          <label class="flex items-center justify-between cursor-pointer p-2 rounded-xl bg-pink-50/70 border border-pink-200/60 hover:bg-pink-50 transition">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-pink-500 animate-ping"></span>
+              <div>
+                <div class="text-xs font-bold text-pink-900">무인센서카메라 영상 지점</div>
+                <div class="text-[10px] text-pink-700">클릭 시 무인카메라 영상 즉시 재생</div>
+              </div>
+            </div>
+            <input type="checkbox" id="layer-cameras" checked onchange="toggleLayer('cameras')" class="w-4 h-4 text-pink-600 rounded">
+          </label>
+
+          <!-- Traces Layer Toggle -->
+          <label class="flex items-center justify-between cursor-pointer p-2 rounded-xl bg-sky-50/70 border border-sky-200/60 hover:bg-sky-50 transition">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+              <div>
+                <div class="text-xs font-bold text-sky-900">수달 조사 흔적 (2,280개소)</div>
+                <div class="text-[10px] text-sky-700">배설물, 발자국, 목견 등 전수조사</div>
+              </div>
+            </div>
+            <input type="checkbox" id="layer-traces" checked onchange="toggleLayer('traces')" class="w-4 h-4 text-sky-600 rounded">
+          </label>
+
+          <!-- LHOS Polygons Toggle -->
+          <label class="flex items-center justify-between cursor-pointer p-2 rounded-xl bg-emerald-50/70 border border-emerald-200/60 hover:bg-emerald-50 transition">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <div>
+                <div class="text-xs font-bold text-emerald-900">LHOS 서식적합유형도</div>
+                <div class="text-[10px] text-emerald-700">도심 하천 식생·적합도 1,426구간</div>
+              </div>
+            </div>
+            <input type="checkbox" id="layer-lhos" checked onchange="toggleLayer('lhos')" class="w-4 h-4 text-emerald-600 rounded">
+          </label>
+
+          <!-- Core Areas Toggle -->
+          <label class="flex items-center justify-between cursor-pointer p-2 rounded-xl bg-amber-50/70 border border-amber-200/60 hover:bg-amber-50 transition">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+              <div>
+                <div class="text-xs font-bold text-amber-900">5대 보호관리 핵심지역</div>
+                <div class="text-[10px] text-amber-700">호암지, 합수부, 달천 등 관리축</div>
+              </div>
+            </div>
+            <input type="checkbox" id="layer-core" checked onchange="toggleLayer('core')" class="w-4 h-4 text-amber-600 rounded">
+          </label>
+        </div>
+
+        <!-- Traces Filters -->
+        <div class="mt-4 pt-3 border-t border-slate-200 space-y-2.5">
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">흔적 세부 필터링</label>
+          
+          <div>
+            <label class="text-[11px] text-slate-600 block mb-1">흔적 유형</label>
+            <select id="filter-type" onchange="applyFilters()" class="w-full text-xs p-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500">
+              <option value="ALL">전체 흔적 (2,280건)</option>
+              <option value="배설물">배설물 (2,190건 - 96.1%)</option>
+              <option value="발자국">발자국 (81건 - 3.5%)</option>
+              <option value="목견">목견 (6건)</option>
+              <option value="기타흔적">기타 / 섭식 흔적</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-[11px] text-slate-600 block mb-1">유역권 선택</label>
+            <select id="filter-ws" onchange="applyFilters()" class="w-full text-xs p-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500">
+              <option value="ALL">충주시 전체 수계 (10개 유역)</option>
+              <option value="목계수위표">목계수위표 (650건 - 27.1%)</option>
+              <option value="운계천합류전">운계천합류전 (436건 - 18.2%)</option>
+              <option value="요도천">요도천 (409건 - 17.0%)</option>
+              <option value="달천하류">달천하류 (313건 - 13.0%)</option>
+              <option value="석문동천">석문동천 (176건 - 7.3%)</option>
+              <option value="석문동천합류전">석문동천합류전 (115건)</option>
+              <option value="섬강합류전">섬강합류전 (105건)</option>
+              <option value="충주조정지댐">충주조정지댐 (77건)</option>
+              <option value="충주댐">충주댐 (67건)</option>
+              <option value="충주댐하류">충주댐하류 (54건)</option>
+            </select>
+          </div>
+          <div id="filter-count-label" class="text-[11px] text-sky-700 font-semibold text-right">
+            현재 2,280개 지점 표시 중
+          </div>
+        </div>
+
+        <!-- Legend (범례) -->
+        <div class="mt-4 pt-3 border-t border-slate-200">
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2">지도 범례 (Legend)</label>
+          <div class="grid grid-cols-2 gap-1.5 text-[11px]">
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-pink-500"></span> <span>🎥 카메라 영상</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-sky-500"></span> <span>배설물 흔적</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500"></span> <span>발자국 흔적</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span>목견/촬영 지점</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-600"></span> <span>LHOS 서식가능</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-lime-500"></span> <span>LHOS 서식잠재</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500"></span> <span>LHOS 서식필요</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-red-500"></span> <span>LHOS 서식불가</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Video Hotspots Floating Bar (Bottom-Center) -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 glass-panel rounded-2xl shadow-2xl p-2.5 px-4 border border-slate-200/90 flex items-center gap-2 max-w-[95vw] overflow-x-auto">
+        <div class="flex items-center gap-1.5 pr-2 border-r border-slate-300 text-xs font-bold text-slate-700 whitespace-nowrap">
+          <span class="w-2.5 h-2.5 rounded-full bg-pink-500 animate-pulse"></span>
+          <span>영상 바로가기:</span>
+        </div>
+        <div class="flex items-center gap-2" id="quick-camera-buttons">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: VIDEO GALLERY ==================== -->
+    <div id="tab-videos" class="w-full h-full overflow-y-auto p-4 sm:p-6 lg:p-8 hidden bg-slate-100">
+      <div class="max-w-7xl mx-auto space-y-6">
+        <!-- Gallery Header -->
+        <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-sky-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-pink-500/20 text-pink-300 border border-pink-500/30">
+                무인센서카메라 & 현장 목견 아카이브
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold mt-2">충주시 수달 현장 영상 컬렉션 (9편)</h2>
+              <p class="text-slate-300 text-sm mt-1 max-w-2xl">
+                충주시 하천 및 호소에서 직접 촬영된 무인적외선 센서카메라와 시민 제보 영상입니다. 지점을 클릭하여 고화질 영상과 생태학적 분석 내용을 확인하세요.
+              </p>
+            </div>
+            <button onclick="switchTab('map')" class="self-start sm:self-center px-4 py-2.5 bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold rounded-xl shadow-md transition flex items-center gap-2">
+              <span>🗺️</span> <span>지도에서 위치 확인</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Video Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="video-cards-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: ANALYTICS & CHARTS ==================== -->
+    <div id="tab-analytics" class="w-full h-full overflow-y-auto p-4 sm:p-6 lg:p-8 hidden bg-slate-100">
+      <div class="max-w-7xl mx-auto space-y-6">
+        <!-- Header -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800">
+            공간통계 및 서식적합도 모델링 분석
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">충주시 수달 공간분포 특성 및 LHOS 평가 결과</h2>
+          <p class="text-slate-600 text-sm mt-1">
+            보고서 내 2,402개 흔적 데이터와 도심지역 1,426개 식생·환경 폴리곤의 다변량 분석 결과를 시각화한 대시보드입니다.
+          </p>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <div class="text-xs font-semibold text-slate-500">최다 출현 수계</div>
+            <div class="text-xl sm:text-2xl font-bold text-blue-600 mt-1">목계수위표</div>
+            <div class="text-xs text-slate-500 mt-1">650개소 (전체의 27.1%)</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <div class="text-xs font-semibold text-slate-500">도심 핵심 서식지</div>
+            <div class="text-xl sm:text-2xl font-bold text-purple-600 mt-1">호암지 · 달천</div>
+            <div class="text-xs text-slate-500 mt-1">313개소 (먹이활동 집중)</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <div class="text-xs font-semibold text-slate-500">평균 서식적합도(LHOS)</div>
+            <div class="text-xl sm:text-2xl font-bold text-emerald-600 mt-1">2.8점 / 5.0</div>
+            <div class="text-xs text-slate-500 mt-1">최대 4.4점 (달천·남한강 하류)</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <div class="text-xs font-semibold text-slate-500">주요 흔적 분포 유형</div>
+            <div class="text-xl sm:text-2xl font-bold text-amber-600 mt-1">배설물 96.1%</div>
+            <div class="text-xs text-slate-500 mt-1">바위 및 교각 중심 영역표시</div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Chart 1: Watershed Distribution -->
+          <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
+              <span>🌊 유역권별 수달 흔적 발견 빈도</span>
+              <span class="text-xs font-normal text-slate-500">단위: 개소(%)</span>
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">목계수위표, 운계천, 요도천 등 충주시 전역 10개 수계별 출현 흔적</p>
+            <div class="h-72">
+              <canvas id="chart-watershed"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: Trace Type Ratio -->
+          <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
+              <span>🐾 흔적 유형별 구성 비율</span>
+              <span class="text-xs font-normal text-slate-500">총 2,280건 기준</span>
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">배설물, 발자국, 무인카메라/목견, 섭식흔적 비율</p>
+            <div class="h-72 flex items-center justify-center">
+              <canvas id="chart-types"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 3: LHOS Classes Breakdown -->
+          <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
+              <span>🌿 LHOS 수달 서식적합유형별 구간 분포</span>
+              <span class="text-xs font-normal text-slate-500">도심 하천 1,426구간</span>
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">서식가능(4.0 이상), 서식잠재(2.5~3.9), 서식필요(1.5~2.4), 불가</p>
+            <div class="h-72">
+              <canvas id="chart-lhos"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 4: River Width vs Presence -->
+          <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
+              <span>📏 하천폭(River Width)에 따른 흔적 빈도</span>
+              <span class="text-xs font-normal text-slate-500">구간별</span>
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">하천 규모(소하천 5m 미만부터 남한강 본류 300m 이상)별 분포 특성</p>
+            <div class="h-72">
+              <canvas id="chart-width"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Environmental Factors Correlation Card -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
+          <h3 class="text-lg font-bold text-slate-900 mb-3">🔬 수달 서식적합도에 미치는 핵심 환경요소 분석</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+            <div class="p-4 rounded-2xl bg-sky-50 border border-sky-100">
+              <div class="font-bold text-sky-900 text-sm mb-1">🪨 바위 및 암반 기질 (최고 기여도)</div>
+              <p class="text-slate-600">수달은 영역 표시를 위해 눈에 띄는 돌출 바위나 평평한 암반에 배설합니다. 바위 개수가 풍부한 구간에서 서식밀도가 3.8배 높게 나타났습니다.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
+              <div class="font-bold text-emerald-900 text-sm mb-1">🌊 수계와의 거리 (수거리 2m 이내)</div>
+              <p class="text-slate-600">조사된 흔적의 86.4%가 수변 2m 이내에 위치하여 하천 수면과 수변식생대 간의 완경사 연속성이 서식에 필수적입니다.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-amber-50 border border-amber-100">
+              <div class="font-bold text-amber-900 text-sm mb-1">🐟 먹이자원 풍부도 (어류·무척추동물)</div>
+              <p class="text-slate-600">호암지와 요도천 하류 보 배후 수역에서 어류 섭식 및 다개체 동시 활동이 확인되어 풍부한 정수역 먹이 공급원이 핵심 요인입니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: REPORT & CONSERVATION ==================== -->
+    <div id="tab-report" class="w-full h-full overflow-y-auto p-4 sm:p-6 lg:p-8 hidden bg-slate-100">
+      <div class="max-w-7xl mx-auto space-y-6">
+        <!-- Overview Card -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800">
+                연구보고서 요약 및 정책 제언
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">충주시 멸종위기종 수달 서식현황 조사 및 관리방안 연구</h2>
+              <p class="text-slate-600 text-sm mt-1">
+                주관: 충주시 | 연구 보고서 수록 5대 보호관리 핵심지역 및 스마트 모니터링 구축 방안
+              </p>
+            </div>
+            <a href="/최종_충주시 수달 최종보고서_합본_260822.pdf" target="_blank" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-sm font-semibold shadow-md transition flex items-center gap-2">
+              <span>📄</span> <span>원문 PDF 열람 (149MB)</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 5 Core Conservation Areas Grid -->
+        <div>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <span>🛡️</span> <span>충주시 수달 5대 보호·관리 핵심지역 (표 5-1 연동)</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="core-areas-grid">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Report Diagrams Gallery -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <span>📸</span> <span>연구보고서 주요 도면 및 현장 조사 사진</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50">
+              <img src="/assets/images/camera_captures_grid.png" alt="무인센서카메라 출현 현황" class="w-full h-48 object-cover bg-black">
+              <div class="p-4">
+                <div class="font-bold text-sm text-slate-900">그림 3-4. 주요 지점별 수달 출현 현황</div>
+                <p class="text-xs text-slate-500 mt-1">목계수위표 논강리·하청교, 요도천 영평교, 호암지 무인카메라 포착 장면</p>
+              </div>
+            </div>
+            <div class="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50">
+              <img src="/assets/images/sightings_grid.png" alt="목견된 수달 현황" class="w-full h-48 object-cover bg-black">
+              <div class="p-4">
+                <div class="font-bold text-sm text-slate-900">그림 3-5. 주요 조사지점별 목견 현황</div>
+                <p class="text-xs text-slate-500 mt-1">달천하류 본류 수영 및 호암지 붕어 섭식 주간 목견 사진</p>
+              </div>
+            </div>
+            <div class="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50">
+              <img src="/assets/images/field_installation_photos.png" alt="현장조사 및 무인카메라 설치" class="w-full h-48 object-cover bg-slate-200">
+              <div class="p-4">
+                <div class="font-bold text-sm text-slate-900">그림 3-2. 현장조사 및 무인카메라 설치</div>
+                <p class="text-xs text-slate-500 mt-1">하천 교각 및 수변 바위 은신처 무인센서카메라 설치 작업</p>
+              </div>
+            </div>
+            <div class="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50">
+              <img src="/assets/images/report_lhos_score_map.png" alt="집중조사지역 LHOS 도면" class="w-full h-48 object-cover bg-slate-200">
+              <div class="p-4">
+                <div class="font-bold text-sm text-slate-900">그림 4-44. 도심 집중조사지역 LHOS 도면</div>
+                <p class="text-xs text-slate-500 mt-1">하천 구간별 0.5~4.4점 서식적합도 점수 분포도</p>
+              </div>
+            </div>
+            <div class="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50">
+              <img src="/assets/images/report_lhos_type_map.png" alt="수달서식적합유형 도면" class="w-full h-48 object-cover bg-slate-200">
+              <div class="p-4">
+                <div class="font-bold text-sm text-slate-900">그림 4-45. 수달 서식적합유형 도면</div>
+                <p class="text-xs text-slate-500 mt-1">서식가능 / 잠재 / 필요 / 불가 4개 등급 공간유형화 도면</p>
+              </div>
+            </div>
+            <div class="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50">
+              <img src="/assets/images/report_core_habitat_map.png" alt="핵심지역 도출 도면" class="w-full h-48 object-cover bg-slate-200">
+              <div class="p-4">
+                <div class="font-bold text-sm text-slate-900">그림 5-2. 수달 보호·관리 핵심지역 도출</div>
+                <p class="text-xs text-slate-500 mt-1">도심 하천축 및 5대 핵심 관리 거점 종합 도면</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Management Guidelines Section -->
+        <div class="bg-gradient-to-br from-slate-900 to-sky-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl space-y-4">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
+            <span>💡</span> <span>충주시 수달 생태적 관리 및 스마트 모니터링 종합 가이드</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+              <div class="font-bold text-sky-400 text-sm mb-1">1. 건식 이동공간 (Dry Ledge) 확보</div>
+              <p class="text-slate-300">교량, 암거, 보 구간에서 하천 수위 상승 시 수달이 도로로 우회하지 않고 구조물 내부를 안전하게 통과하도록 수면 상부 건식 선반을 확보합니다.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+              <div class="font-bold text-sky-400 text-sm mb-1">2. 야간 산책로 조명 및 차폐식생</div>
+              <p class="text-slate-300">호암지 및 도심 하천 산책로에서 수면으로 향하는 직사 야간 조명을 차폐하고, 수달 주요 이동 지점에 다층 관목식생대를 식재하여 은신처를 제공합니다.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+              <div class="font-bold text-sky-400 text-sm mb-1">3. 시민참여 비접촉 스마트 모니터링</div>
+              <p class="text-slate-300">수달 서식지에 시민 직접 접근을 유도하기보다는 무인센서카메라와 고정형 CCTV 영상을 활용한 본 웹 플랫폼 기반 비접촉 생태체험 및 교육을 추진합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== VIDEO PLAYER MODAL ==================== -->
+  <div id="video-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 video-modal-backdrop hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between text-white flex-none">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-pink-500 animate-ping"></span>
+          <div>
+            <h3 id="modal-video-title" class="font-bold text-base sm:text-lg text-white">무인센서카메라 수달 영상</h3>
+            <p id="modal-video-location" class="text-xs text-slate-400">촬영 위치 정보</p>
+          </div>
+        </div>
+        <button onclick="closeVideoModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body (Video + Playlist + Metadata) -->
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+        <!-- Video Container -->
+        <div class="video-container relative rounded-2xl bg-black aspect-video max-h-[55vh] flex items-center justify-center">
+          <video id="modal-video-player" controls preload="metadata" class="w-full h-full">
+            <source id="modal-video-source" src="" type="video/mp4">
+            브라우저가 동영상 재생을 지원하지 않습니다.
+          </video>
+        </div>
+
+        <!-- Playlist Tabs (If site has multiple videos) -->
+        <div id="modal-playlist-tabs" class="flex flex-wrap gap-2 pt-1 hidden">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Metadata & Ecological Context Card -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 text-xs text-slate-300 space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-700">
+            <div class="flex items-center gap-2">
+              <span id="modal-meta-tag" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-pink-500/20 text-pink-300 border border-pink-500/30">야간 적외선</span>
+              <span id="modal-meta-count" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">1개체</span>
+            </div>
+            <button id="modal-btn-zoom" onclick="zoomToCurrentCamera()" class="px-3 py-1 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition">
+              <span>📍</span> <span>지도에서 이 위치 보기</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div>
+              <span class="text-slate-400 font-semibold block mb-0.5">관찰된 수달 행동:</span>
+              <p id="modal-meta-behavior" class="text-slate-200">수변 바위 은신처 탐색 및 수중 잠수 활동</p>
+            </div>
+            <div>
+              <span class="text-slate-400 font-semibold block mb-0.5">서식 환경 및 보고서 평가:</span>
+              <p id="modal-meta-desc" class="text-slate-200">해당 구간의 생태학적 특성</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
