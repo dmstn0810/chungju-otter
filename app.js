@@ -117,11 +117,11 @@ function resetMapView() {
 async function loadAllData() {
   try {
     const [camsRes, tracesRes, lhosRes, statsRes, coreRes] = await Promise.all([
-      fetch('/data/camera_sites.json'),
-      fetch('/data/traces.json'),
-      fetch('/data/lhos_polygons.geojson'),
-      fetch('/data/statistics.json'),
-      fetch('/data/core_areas.json')
+      fetch('./data/camera_sites.json'),
+      fetch('./data/traces.json'),
+      fetch('./data/lhos_polygons.geojson'),
+      fetch('./data/statistics.json'),
+      fetch('./data/core_areas.json')
     ]);
 
     dataStore.cameras = await camsRes.json();
@@ -129,6 +129,21 @@ async function loadAllData() {
     dataStore.lhos = await lhosRes.json();
     dataStore.stats = await statsRes.json();
     dataStore.coreAreas = await coreRes.json();
+
+    // When hosted on GitHub Pages or non-local environment, stream Git LFS videos via media.githubusercontent.com
+    const isLocalServer = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    if (!isLocalServer) {
+      const ghMediaBase = 'https://media.githubusercontent.com/media/dmstn0810/chungju-otter/master';
+      dataStore.cameras.forEach(site => {
+        if (site.videos) {
+          site.videos.forEach(v => {
+            if (v.url && v.url.startsWith('/videos/')) {
+              v.url = ghMediaBase + v.url;
+            }
+          });
+        }
+      });
+    }
 
     console.log('All data loaded successfully:', {
       cameras: dataStore.cameras.length,
